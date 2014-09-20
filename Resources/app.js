@@ -1,15 +1,13 @@
 var pWidth = Ti.Platform.displayCaps.platformWidth;
 var pHeight = Ti.Platform.displayCaps.platformHeight;
+var firearmContainer = require('firearmContainer');
+
 var firearmData = require('Json');
-var firearmContainer = Ti.UI.createWindow({
-	 backgroundImage: 'images/bg_body.jpg',
-	navTintColor: '#FFCC11'
-});
 
 // create tab group
 var tabGroup = Titanium.UI.createTabGroup({
-	barColor: '#383B3A',
-	tabsTintColor: '#383B3A',
+	barColor : '#383B3A',
+	tabsTintColor : '#383B3A',
 });
 
 var win1 = Titanium.UI.createWindow({
@@ -67,6 +65,9 @@ var logoView = Titanium.UI.createView({
 var aniView1 = Titanium.UI.createView({
 	backgroundImage : 'images/HSimages/TomaiseBan.png',
 });
+aniView1.addEventListener('click', function(e) {
+	
+});
 var aniView2 = Titanium.UI.createView({
 	backgroundImage : 'images/HSimages/EliteProBan.png',
 });
@@ -77,63 +78,49 @@ var scrollable = Titanium.UI.createScrollableView({
 	height : 175,
 	top : 51,
 	views : [aniView1, aniView2, aniView3],
-	showPagingControl : true,
+	showPagingControl : false,
+	//showHorizontalScrollIndicator: true,
 });
 
-var executiveH = Ti.UI.createImageView({
-	top : 230,
-	width : 100,
-	height : 107.5,
-	left : 5,
-	image : 'images/HSimages/ExecutiveH.png'
+var ar = scrollable.getViews();
+var t = 0;
+setInterval(function(e) {
+    if(t >= ar.length) {
+        t = 0;
+    }
+    scrollable.scrollToView(t);
+    t++;
+ 
+}, 2500);
+
+var playerView = Ti.UI.createImageView({
+	image: 'images/Para4Life.png',
+	width: 'auto',
+	height: 225,
+	bottom: 5,
 });
-var LDAH = Ti.UI.createImageView({
-	top : 230,
-	width : 100,
-	height : 107.5,
-	//left: 110,
-	image : 'images/HSimages/LDAH.png'
+
+playerView.addEventListener('click', function(e) {
+	Ti.Platform.openURL('http://www.youtube.com/watch?v=vh_LSWfi9Gk');
 });
-var competitionH = Ti.UI.createImageView({
-	top : 230,
-	width : 100,
-	height : 107.5,
-	right : 5,
-	image : 'images/HSimages/CompetitionH.png'
-});
-var tacticalH = Ti.UI.createImageView({
-	top : 342.5,
-	width : 100,
-	height : 107.5,
-	left : 5,
-	image : 'images/HSimages/TacticalH.png'
-});
-var eliteH = Ti.UI.createImageView({
-	top : 342.5,
-	width : 100,
-	height : 107.5,
-	image : 'images/HSimages/EliteH.png'
-});
-var expertH = Ti.UI.createImageView({
-	top : 342.5,
-	width : 100,
-	height : 107.5,
-	right : 5,
-	image : 'images/HSimages/ExpertH.png'
-});
+
 
 //add to win2
-var listTab = Ti.UI.createTableView({
 
+var searchbar = Ti.UI.createSearchBar({
+	barColor: '#383B3A',
+	showCancel: false
 });
-	listTab.addEventListener('click', function(){
-		tabGroup.activeTab.open(firearmContainer);
-	}
-	
-	);
+var listTab = Ti.UI.createTableView({
+	search: searchbar,
+});
+
+listTab.addEventListener('click', function(e) {
+	tabGroup.activeTab.open(firearmContainer.openFireArmContainer(e.source.info));
+});
+
 for (category in firearmData.array) {
 	Ti.API.info('Iteration for  ' + category);
-
 
 	// Create table view sections
 	Ti.API.info('Creating table section for ' + category);
@@ -144,13 +131,13 @@ for (category in firearmData.array) {
 	for (var i = 0; i < firearmData.array[category].length; i++) {
 		var firearm;
 		firearm = firearmData.array[category][i];
-		
-		
+
 		// Create Row
 		var theRow = Ti.UI.createTableViewRow({
 			title : firearm.model,
+			info : firearm
 		});
-		
+
 		// Add row to section
 		tableSections.add(theRow);
 	};
@@ -158,6 +145,7 @@ for (category in firearmData.array) {
 	listTab.appendSection([tableSections]);
 
 };
+
 
 //Add to win3
 var logoView2 = Titanium.UI.createView({
@@ -219,11 +207,13 @@ var logoView3 = Titanium.UI.createView({
 var specialView = Ti.UI.createImageView({
 	image : 'images/Special.jpg',
 	top : 50,
+	enableZoomControls: true,
 });
 
 //Add to firearmContainer
 var logoView4 = Titanium.UI.createView({
 	backgroundImage : 'images/logo.png',
+	left: 0,
 	top : 0,
 	height : 50,
 	width : 150,
@@ -239,8 +229,8 @@ tabGroup.addTab(tab4);
 tabGroup.open();
 
 //add elements to windows
-win1.add(logoView, scrollable, executiveH, LDAH, competitionH, tacticalH, eliteH, expertH);
+win1.add(logoView, scrollable, playerView);
 win2.add(listTab);
 win3.add(logoView2, headerLabel, secondLabel, bodyLabel);
 win4.add(logoView3, specialView);
-firearmContainer.add(logoView4);
+// firearmContainer.add(logoView4);
