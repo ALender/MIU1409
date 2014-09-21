@@ -66,7 +66,7 @@ var aniView1 = Titanium.UI.createView({
 	backgroundImage : 'images/HSimages/TomaiseBan.png',
 });
 aniView1.addEventListener('click', function(e) {
-	
+
 });
 var aniView2 = Titanium.UI.createView({
 	backgroundImage : 'images/HSimages/EliteProBan.png',
@@ -79,40 +79,38 @@ var scrollable = Titanium.UI.createScrollableView({
 	top : 51,
 	views : [aniView1, aniView2, aniView3],
 	showPagingControl : false,
-	//showHorizontalScrollIndicator: true,
 });
 
 var ar = scrollable.getViews();
 var t = 0;
 setInterval(function(e) {
-    if(t >= ar.length) {
-        t = 0;
-    }
-    scrollable.scrollToView(t);
-    t++;
- 
+	if (t >= ar.length) {
+		t = 0;
+	}
+	scrollable.scrollToView(t);
+	t++;
+
 }, 2500);
 
 var playerView = Ti.UI.createImageView({
-	image: 'images/Para4Life.png',
-	width: 'auto',
-	height: 225,
-	bottom: 5,
+	image : 'images/Para4Life.png',
+	width : 'auto',
+	height : 225,
+	bottom : 5,
 });
 
 playerView.addEventListener('click', function(e) {
 	Ti.Platform.openURL('http://www.youtube.com/watch?v=vh_LSWfi9Gk');
 });
 
-
 //add to win2
 
 var searchbar = Ti.UI.createSearchBar({
-	barColor: '#383B3A',
-	showCancel: false
+	barColor : '#383B3A',
+	showCancel : false
 });
 var listTab = Ti.UI.createTableView({
-	search: searchbar,
+	search : searchbar,
 });
 
 listTab.addEventListener('click', function(e) {
@@ -145,7 +143,6 @@ for (category in firearmData.array) {
 	listTab.appendSection([tableSections]);
 
 };
-
 
 //Add to win3
 var logoView2 = Titanium.UI.createView({
@@ -187,7 +184,6 @@ var textEmp = Ti.UI.iOS.createAttributedString({
 });
 
 var bodyLabel = Titanium.UI.createLabel({
-	//	text: 'North Carolina. Where every PARA 1911 is born. Each a brainchild of the most innovative, influential minds in pistol design. Made by hand, on a bench, one at a time, by men as passionate about building firearms as they are about shooting them.\n\nSure, we have no shortage of state-of-the-art equipment. But a machine can’t feel. It can’t hold a pistol in its hands and know exactly what’s working, and what isn’t. Our guys can. And every PARA must go through their hands before it ever ends up in yours.\n\nCraftsmanship is the engine that runs this place. And you can feel it in every firearm that proudly wears the PARA name.',
 	text : newText,
 	left : 10,
 	color : '#ffffff',
@@ -207,13 +203,13 @@ var logoView3 = Titanium.UI.createView({
 var specialView = Ti.UI.createImageView({
 	image : 'images/Special.jpg',
 	top : 50,
-	enableZoomControls: true,
+	enableZoomControls : true,
 });
 
 //Add to firearmContainer
 var logoView4 = Titanium.UI.createView({
 	backgroundImage : 'images/logo.png',
-	left: 0,
+	left : 0,
 	top : 0,
 	height : 50,
 	width : 150,
@@ -233,4 +229,3 @@ win1.add(logoView, scrollable, playerView);
 win2.add(listTab);
 win3.add(logoView2, headerLabel, secondLabel, bodyLabel);
 win4.add(logoView3, specialView);
-// firearmContainer.add(logoView4);
